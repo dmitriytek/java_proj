@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form method="post" action="/">
+            <input type="text" name="text" placeholder="сообщение"/>
+            <input type="text" name="tag" placeholder="tag"/>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+    <div>Сообщения:</div>
+    <form method="post" action="filter">
+        <input type="text" name="filter"/>
+        <button type="submit">Найти</button>
+    </form>
+    {{#messages}}
+    <div>
+        <form method="post" action="delete">
+            <b>{{id}}</b>
+            <span>{{text}}</span>
+            <i>{{tag}}</i>
+            <input type="hidden" name="id" value="{{id}}"/>
+            <button type="submit">Удалить</button>
+        </form>
+    </div>
+    {{/messages}}
+</body>
+</html>
