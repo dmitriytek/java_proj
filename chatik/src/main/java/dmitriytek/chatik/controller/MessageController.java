@@ -1,10 +1,13 @@
 package dmitriytek.chatik.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import dmitriytek.chatik.config.Views;
 import dmitriytek.chatik.domain.Message;
 import dmitriytek.chatik.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,7 @@ public class MessageController {
     }
 
     @GetMapping
+    @JsonView(Views.MessageList.class)
     public List<Message> getMessages(){
         return messageRepo.findAll();
     }
@@ -28,6 +32,7 @@ public class MessageController {
 
     @PostMapping
     public Message createMessage(@RequestBody Message message){
+        message.setCreationDate(LocalDateTime.now());
         return messageRepo.save(message);
     }
 

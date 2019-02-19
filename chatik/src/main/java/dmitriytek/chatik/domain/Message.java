@@ -1,9 +1,13 @@
 package dmitriytek.chatik.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import dmitriytek.chatik.config.Views;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -12,12 +16,16 @@ import javax.persistence.*;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.MessageList.class)
     private Long id;
-    private String title;
 
     @Column(columnDefinition="text")
+    @JsonView(Views.MessageList.class)
     private String text;
-    private String tag;
+
+    @Column(updatable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime creationDate;
 
     public Long getId() {
         return id;
@@ -25,14 +33,6 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getText() {
@@ -43,11 +43,11 @@ public class Message {
         this.text = text;
     }
 
-    public String getTag() {
-        return tag;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }
